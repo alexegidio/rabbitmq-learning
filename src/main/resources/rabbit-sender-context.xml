@@ -6,9 +6,8 @@
     
 	<!-- first following line creates a rabbit connection factory with specified parameters -->
 	<rabbit:connection-factory id="connectionFactory" host="localhost" username="guest" password="guest" />
-	<!-- obtain admin rights to create the an exchange -->
+	
 	<rabbit:admin connection-factory="connectionFactory" />
 
-	<!-- create a bean which can send message to TUTORIAL_EXCHANGE for the Java program to call -->
-	<rabbit:template id="tutorialTemplate" connection-factory="connectionFactory" exchange="TUTORIAL-EXCHANGE" />
+	<rabbit:template id="tutorialTemplate" connection-factory="connectionFactory" exchange="ROUTE-EXCHANGE" />
 </beans>

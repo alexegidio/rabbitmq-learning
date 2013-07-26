@@ -7,22 +7,24 @@ http://www.springframework.org/schema/rabbit http://www.springframework.org/sche
 	<rabbit:connection-factory id="connectionFactory" host="localhost" username="guest" password="guest" />
 	<rabbit:admin connection-factory="connectionFactory" />
 
-	<!-- Create myAnonymousQueue queue -->
-	<rabbit:queue id="myAnonymousQueue" />
+	<rabbit:queue id="newsQueue" />
 
-	<!-- create myExchange and bind myAnonymousQueue with my.routingkey.1 to the TUTORIAL-EXCHANGE -->
-	<rabbit:topic-exchange id="myExchange" name="TUTORIAL-EXCHANGE">
+	<rabbit:queue id="postQueue" />
+
+	<rabbit:topic-exchange id="newsExchange" name="ROUTE-EXCHANGE">
 		<rabbit:bindings>
-			<rabbit:binding queue="myAnonymousQueue" pattern="my.#.*"></rabbit:binding>
+			<rabbit:binding queue="newsQueue" pattern="news.#.*"></rabbit:binding>
+			<rabbit:binding queue="postQueue" pattern="post.#.*"></rabbit:binding>
 		</rabbit:bindings>
 	</rabbit:topic-exchange>
 
-	<!-- instantiate TutorialListener -->
-	<bean id="aListener" class="br.org.alexegidio.spring.SpringRabbitListener" />
+	<!-- INSTANTIATE LISTENERS -->
+	<bean id="newsListener" class="br.org.alexegidio.spring.route.SpringNewsListener" />
+	<bean id="postListener" class="br.org.alexegidio.spring.route.SpringPostListener" />
 
-	<!-- glue the listener and myAnonymousQueue to the container -->
 	<rabbit:listener-container id="myListenerContainer" connection-factory="connectionFactory">
-		<rabbit:listener ref="aListener" queues="myAnonymousQueue" />
+		<rabbit:listener ref="newsListener" queues="newsQueue" />
+		<rabbit:listener ref="postListener" queues="postQueue" />
 	</rabbit:listener-container>
-	
+
 </beans>

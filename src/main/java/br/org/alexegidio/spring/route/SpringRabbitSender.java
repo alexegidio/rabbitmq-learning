@@ -1,4 +1,4 @@
-package br.org.alexegidio.spring;
+package br.org.alexegidio.spring.route;
 
 import java.util.Date;
 
@@ -13,7 +13,15 @@ public class SpringRabbitSender {
 		AmqpTemplate aTemplate = (AmqpTemplate) context.getBean("tutorialTemplate");// getting a reference to the sender
 																					// bean
 
-		for (int i = 0; i < 10; i++)
-			aTemplate.convertAndSend("my.routingkey.1", "Message # " + i + " on " + new Date());// send
+		for (int i = 0; i < 10; i++) {
+			int rest = (i % 2);
+			System.out.println(rest);
+			if (rest == 1) {
+
+				aTemplate.convertAndSend("news.routingkey.1", "Message # " + i + " on " + new Date());
+			} else {
+				aTemplate.convertAndSend("post.routingkey.1", "Message # " + i + " on " + new Date());
+			}
+		}
 	}
 }
