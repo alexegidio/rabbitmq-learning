@@ -1,13 +1,12 @@
-package br.org.alexegidio.spring.route;
+package br.org.alexegidio.spring.topic;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 
-public class SpringPostListener implements MessageListener {
+public class SpringNewsListener implements MessageListener {
 
 	public void onMessage(Message message) {
 		String messageBody = new String(message.getBody());
-		System.out.println("PostListener received message----->" + messageBody);
+		System.out.println("NewsListener received message----->" + messageBody);
 	}
-	
 }

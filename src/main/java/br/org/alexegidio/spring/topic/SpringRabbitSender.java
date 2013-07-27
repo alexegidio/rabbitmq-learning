@@ -1,4 +1,4 @@
-package br.org.alexegidio.spring.route;
+package br.org.alexegidio.spring.topic;
 
 import java.util.Date;
 
@@ -17,7 +17,6 @@ public class SpringRabbitSender {
 			int rest = (i % 2);
 			System.out.println(rest);
 			if (rest == 1) {
-
 				aTemplate.convertAndSend("news.routingkey.1", "Message # " + i + " on " + new Date());
 			} else {
 				aTemplate.convertAndSend("post.routingkey.1", "Message # " + i + " on " + new Date());

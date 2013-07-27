@@ -19,11 +19,14 @@ http://www.springframework.org/schema/rabbit http://www.springframework.org/sche
 	</rabbit:topic-exchange>
 
 	<!-- INSTANTIATE LISTENERS -->
-	<bean id="newsListener" class="br.org.alexegidio.spring.route.SpringNewsListener" />
-	<bean id="postListener" class="br.org.alexegidio.spring.route.SpringPostListener" />
+	<bean id="newsListener" class="br.org.alexegidio.spring.topic.SpringNewsListener" />
+	<bean id="postListener" class="br.org.alexegidio.spring.topic.SpringPostListener" />
 
-	<rabbit:listener-container id="myListenerContainer" connection-factory="connectionFactory">
+	<rabbit:listener-container id="newsListenerContainer" connection-factory="connectionFactory">
 		<rabbit:listener ref="newsListener" queues="newsQueue" />
+	</rabbit:listener-container>
+	
+	<rabbit:listener-container id="postListenerContainer" connection-factory="connectionFactory">
 		<rabbit:listener ref="postListener" queues="postQueue" />
 	</rabbit:listener-container>
 

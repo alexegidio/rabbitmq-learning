@@ -1,13 +1,13 @@
-package br.org.alexegidio.spring;
+package br.org.alexegidio.spring.confirm;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
-public class LoadContainer {
+public class ConfirmLoadContainer {
 
 	public static void main(String[] args) {
-		ApplicationContext c1 = new ClassPathXmlApplicationContext("rabbit-listener-context.xml");
+		ApplicationContext c1 = new ClassPathXmlApplicationContext("rabbit-confirm-context.xml");
 
 	}
 }

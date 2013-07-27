@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+
+	<rabbit:connection-factory id="connectionFactory" host="localhost" username="guest" password="guest" />
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<rabbit:queue id="orangeQueue" />
+
+	<rabbit:queue id="appleQueue" />
+
+	<rabbit:direct-exchange id="directExchange" name="ROUTING-EXCHANGE">
+		<rabbit:bindings>
+			<rabbit:binding queue="orangeQueue" key="orange"></rabbit:binding>
+			<rabbit:binding queue="appleQueue" key="apple"></rabbit:binding>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+
+	<!-- INSTANTIATE LISTENERS -->
+	<bean id="orangeListener" class="br.org.alexegidio.spring.routing.RabbitOrangeListener" />
+	<bean id="appleListener" class="br.org.alexegidio.spring.routing.RabbitAppleListener" />
+
+	<rabbit:listener-container id="orangeListenerContainer" connection-factory="connectionFactory">
+		<rabbit:listener ref="orangeListener" queues="orangeQueue" />
+	</rabbit:listener-container>
+	
+	<rabbit:listener-container id="appleListenerContainer" connection-factory="connectionFactory">
+		<rabbit:listener ref="appleListener" queues="appleQueue" />
+	</rabbit:listener-container>
+
+</beans>

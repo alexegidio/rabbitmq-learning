@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+
+	<bean id="connectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<constructor-arg value="localhost" />
+		<property name="username" value="guest" />
+		<property name="password" value="guest" />
+		<property name="channelCacheSize" value="25" />
+		<property name="publisherConfirms" value="true" />
+		<property name="publisherReturns" value="true" />
+	</bean>
+
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<rabbit:queue id="confirmQueue" />
+
+	<rabbit:direct-exchange id="directExchange" name="CONFIRM-EXCHANGE">
+		<rabbit:bindings>
+			<rabbit:binding queue="confirmQueue" key="confirm" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+
+	<!-- INSTANTIATE LISTENERS -->
+	<bean id="confirmListener" class="br.org.alexegidio.spring.confirm.RabbitConfirmListener" />
+
+
+	<rabbit:listener-container id="confirmListenerContainer" connection-factory="connectionFactory">
+		<rabbit:listener ref="confirmListener" queues="confirmQueue" />
+	</rabbit:listener-container>
+
+</beans>

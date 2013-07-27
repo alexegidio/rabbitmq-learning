@@ -1,12 +1,12 @@
-package br.org.alexegidio.spring.route;
+package br.org.alexegidio.spring.routing;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 
-public class SpringNewsListener implements MessageListener {
+public class RabbitAppleListener implements MessageListener {
 
 	public void onMessage(Message message) {
 		String messageBody = new String(message.getBody());
-		System.out.println("NewsListener received message----->" + messageBody);
+		System.out.println("Apple received making pie----->" + messageBody);
 	}
 }
