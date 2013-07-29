@@ -26,7 +26,7 @@ http://www.springframework.org/schema/rabbit http://www.springframework.org/sche
 		<rabbit:listener ref="orangeListener" queues="orangeQueue" />
 	</rabbit:listener-container>
 	
-	<rabbit:listener-container id="appleListenerContainer" connection-factory="connectionFactory">
+	<rabbit:listener-container id="appleListenerContainer" connection-factory="connectionFactory" >
 		<rabbit:listener ref="appleListener" queues="appleQueue" />
 	</rabbit:listener-container>
 

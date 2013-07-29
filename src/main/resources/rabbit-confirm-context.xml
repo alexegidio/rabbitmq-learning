@@ -27,8 +27,8 @@ http://www.springframework.org/schema/rabbit http://www.springframework.org/sche
 	<bean id="confirmListener" class="br.org.alexegidio.spring.confirm.RabbitConfirmListener" />
 
 
-	<rabbit:listener-container id="confirmListenerContainer" connection-factory="connectionFactory">
+	<rabbit:listener-container id="confirmListenerContainer" connection-factory="connectionFactory" acknowledge="manual">
 		<rabbit:listener ref="confirmListener" queues="confirmQueue" />
-	</rabbit:listener-container>
+	</rabbit:listener-container>		
 
 </beans>

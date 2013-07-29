@@ -27,7 +27,6 @@ public class SpringRabbitConfirmSender {
 				} else {
 					System.out.println("Msg not received " + correlationData + " at " + new Date());
 				}
-
 			}
 		});
 		for (int i = 0; i < 10; i++) {
